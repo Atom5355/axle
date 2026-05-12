@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "vehicles": {
+          "$vehicleId": {
+            ".validate": "newData.hasChildren(['make', 'model'])",
+            "make": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 80" },
+            "model": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 80" },
+            "year": { ".validate": "newData.val() === null || (newData.isNumber() && newData.val() >= 1900 && newData.val() <= 2100)" },
+            "currentMileage": { ".validate": "newData.val() === null || (newData.isNumber() && newData.val() >= 0)" },
+            "$other": { ".validate": true }
+          }
+        },
+        "maintenance": {
+          "$vehicleId": {
+            "$recordId": {
+              ".validate": "newData.hasChildren(['date', 'serviceType'])",
+              "date": { ".validate": "newData.isString() && newData.val().length > 0" },
+              "serviceType": { ".validate": "newData.isString() && newData.val().length > 0" },
+              "mileage": { ".validate": "newData.val() === null || (newData.isNumber() && newData.val() >= 0)" },
+              "cost": { ".validate": "newData.val() === null || (newData.isNumber() && newData.val() >= 0)" },
+              "$other": { ".validate": true }
+            }
+          }
+        }
+      }
+    }
+  }
+}
