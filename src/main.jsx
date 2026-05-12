@@ -5,9 +5,12 @@ import App from './App.jsx';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import './index.css';
 
+// Strip trailing slash so `/axle/` becomes `/axle` for react-router basename.
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AuthProvider>
         <App />
       </AuthProvider>
